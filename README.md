@@ -30,7 +30,7 @@ Inicie o servidor de desenvolvimento:
 python manage.py runserver
 
 Acesse a aplicação em seu navegador:
-Abra seu navegador e acesse http://localhost:8000/.
+Abra seu navegador e acesse http://localhost:8000/pokemon/1.
 
 Uso
 Ao acessar a página inicial, você verá detalhes do primeiro Pokémon na Pokédex.
