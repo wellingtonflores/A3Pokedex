@@ -12,6 +12,8 @@ Pip (gerenciador de pacotes Python)
 
 Clone o repositório:
 git clone https://github.com/wellingtonflores/A3Pokedex
+
+Navegue até a pasta raiz
 cd pokedex
 
 Crie e ative um ambiente virtual:
