@@ -5,6 +5,7 @@ Funcionalidades
 Visualização de detalhes de Pokémon, incluindo nome, número, sprite e tipos.
 Navegação entre Pokémon usando os botões "Prev" e "Next".
 Pesquisa de Pokémon pelo nome ou número.
+
 Pré-requisitos
 Python 3.x
 Django 3.x
