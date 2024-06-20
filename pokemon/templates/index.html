@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <link rel="icon" href="{% static 'img/favicons/favicon-16x16.png' %}">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <title>Pokédex</title>
+</head>
+<body>
+  <main>
+    <img src="{{ pokemon.sprites.front_default }}" alt="pokemon" class="pokemon__image">
+
+    <h1 class="pokemon__data">
+      <span class="pokemon__number">{{ pokemon.id }}</span> -
+      <span class="pokemon__name">{{ pokemon.name }}</span>
+    </h1>
+
+
+    <form class="form search-form" method="post">
+      {% csrf_token %}
+      <input type="search" name="search_pokemon" class="input__search" placeholder="Name or Number">
+      <button type="submit" class="button btn-search">Search</button>
+    </form>
+
+
+    <form class="form nav-form" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="pokemon_id" value="{{ pokemon.id }}">
+      <div class="buttons">
+        <button type="submit" name="prev_pokemon" value="true" class="button btn-prev">Prev &lt;</button>
+        <button type="submit" name="next_pokemon" value="true" class="button btn-next">Next &gt;</button>
+      </div>
+    </form>
+
+    <img src="{% static 'img/pokedex.png' %}" alt="pokedex" class="pokedex">
+  </main>
+</body>
+</html>
