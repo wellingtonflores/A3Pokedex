@@ -18,6 +18,8 @@ cd pokedex
 
 Crie e ative um ambiente virtual:
 python -m venv venv
+
+Para ativação:
 source venv/bin/activate  # no Windows use `venv\Scripts\activate`
 
 Instale as dependências do projeto:
