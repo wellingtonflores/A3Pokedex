@@ -14,7 +14,7 @@
       {% if pokemon.animated_front_default %}
         <img src="{{ pokemon.animated_front_default }}" alt="pokemon" class="pokemon__image">
       {% else %}
-        <p class="pokemon__not-found">Animação não disponível</p>
+         <img src="{{ pokemon.sprites.front_default }}" alt="pokemon" class="pokemon__image">
       {% endif %}
 
       <h1 class="pokemon__data">
