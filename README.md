@@ -24,10 +24,9 @@ Para ativação:
 source venv/bin/activate  # no Windows use `venv\Scripts\activate`
 
 Instale as dependências do projeto:
-pip install -r requirements.txt
+pip install requests
 
-Execute as migrações do Django:
-python manage.py migrate
+Troque o interpretador para o venv
 
 Inicie o servidor de desenvolvimento:
 python manage.py runserver
