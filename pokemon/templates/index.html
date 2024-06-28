@@ -14,12 +14,12 @@
       {% if pokemon.animated_front_default %}
         <img src="{{ pokemon.animated_front_default }}" alt="pokemon" class="pokemon__image">
       {% else %}
-         <img src="{{ pokemon.sprites.front_default }}" alt="pokemon" class="pokemon__image">
+        <img src="{{ pokemon.sprites.front_default }}" alt="pokemon" class="pokemon__image">
       {% endif %}
 
       <h1 class="pokemon__data">
         <span class="pokemon__number">{{ pokemon.id }}</span> -
-        <span class="pokemon__name">{{ pokemon.name }}</span>
+        <span class="pokemon__name">{{ pokemon.display_name }}</span>
       </h1>
 
       <form class="form search-form" method="post">

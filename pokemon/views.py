@@ -19,7 +19,6 @@ def pokemon_detail(request, pokemon_id):
                     pokemon_data = response.json()
                     pokemon_id = pokemon_data['id']
                 except requests.exceptions.RequestException as e:
-                    print("Pokemon não encontrado")
                     return render(request, 'index.html', {'pokemon': None})
         return redirect('pokemon_detail', pokemon_id=pokemon_id)
 
@@ -36,6 +35,11 @@ def pokemon_detail(request, pokemon_id):
                     animated_front_default = black_white['animated'].get('front_default')
         
         pokemon_data['animated_front_default'] = animated_front_default
+        if len(pokemon_data['name']) > 10:
+            pokemon_data['display_name'] = pokemon_data['name'].split('-')[0]
+            print(pokemon_data['name'])
+        else:
+            pokemon_data['display_name'] = pokemon_data['name']
         
         return render(request, 'index.html', {'pokemon': pokemon_data})
     except requests.exceptions.RequestException as e:
