@@ -3,7 +3,6 @@ from django.test import Client
 from django.urls import reverse
 from faker import Faker
 
-
 # teste id-1
 @pytest.mark.django_db
 def test_pokemon_detail_id_1():
@@ -90,3 +89,28 @@ def test_pokemon_detail_random_ids():
             assert '<p class="pokemon__image">Pokemon não encontrado.</p>' in response.content.decode('utf-8')
     
     print("Generated IDs:", generated_ids)
+
+#teste botao prev_pokemon
+@pytest.mark.django_db
+def test_prev_pokemon_button(client):
+    
+    response = client.post('/pokemon/1/', {'prev_pokemon': True, 'pokemon_id': 2})
+    
+    assert response.status_code == 302 
+    assert response.url == '/pokemon/1/'  
+
+#teste botao next_pokemon
+@pytest.mark.django_db
+def test_next_pokemon_button(client):
+    
+    response = client.post('/pokemon/1/', {'next_pokemon': True, 'pokemon_id': 2})
+   
+    assert response.status_code == 302  
+    assert response.url == '/pokemon/3/'  
+
+#teste botao search_pokemon
+@pytest.mark.django_db
+def test_search_pokemon_button(client):
+    response = client.post('/pokemon/1/', {'search_pokemon': 'bulbasaur'})
+    assert response.status_code == 302
+    assert response.url == '/pokemon/1/'
