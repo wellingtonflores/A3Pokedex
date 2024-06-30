@@ -1,6 +1,8 @@
 import pytest
 from django.test import Client
 from django.urls import reverse
+from faker import Faker
+
 
 # teste id-1
 @pytest.mark.django_db
@@ -67,3 +69,24 @@ def test_pokemon_detail_id_1026():
     
     assert response.status_code == 200
     assert '<p class="pokemon__image">Pokemon não encontrado.</p>' in response.content.decode('utf-8')
+
+#teste com ids aleatorios
+fake = Faker()
+
+def test_pokemon_detail_random_ids():
+    client = Client()
+    generated_ids = []
+    
+    for _ in range(5):
+        random_id = fake.random_int(min=1, max=1025)
+        generated_ids.append(random_id)
+        url = reverse('pokemon_detail', kwargs={'pokemon_id': random_id})
+        response = client.get(url)
+        
+        assert response.status_code == 200 or response.status_code == 404
+        if response.status_code == 200:
+            assert 'Pokemon não encontrado.' not in response.content.decode('utf-8')
+        else:
+            assert '<p class="pokemon__image">Pokemon não encontrado.</p>' in response.content.decode('utf-8')
+    
+    print("Generated IDs:", generated_ids)
