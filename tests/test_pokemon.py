@@ -1,6 +1,8 @@
 import pytest
 from django.test import Client
 from django.urls import reverse
+from unittest.mock import patch
+import requests_mock
 from faker import Faker
 
 # teste id-1
@@ -114,3 +116,53 @@ def test_search_pokemon_button(client):
     response = client.post('/pokemon/1/', {'search_pokemon': 'bulbasaur'})
     assert response.status_code == 302
     assert response.url == '/pokemon/1/'
+
+# teste com nome de Pokemon
+@pytest.mark.django_db
+def test_search_pokemon_pikachu():
+    client = Client()
+
+    with requests_mock.Mocker() as mocker:
+        mocker.get('https://pokeapi.co/api/v2/pokemon/pikachu/', json={
+            'id': 25,
+            'name': 'pikachu',
+            'sprites': {
+                'front_default': 'https://pokeapi.co/media/sprites/pokemon/25.png'
+            }
+        })
+
+        response = client.post(reverse('pokemon_detail', kwargs={'pokemon_id': 'pikachu'}))
+
+        assert response.status_code == 302
+        
+        redirect_url = response.url
+        assert redirect_url == '/pokemon/pikachu/'
+
+        follow_response = client.get(redirect_url)
+
+        assert follow_response.status_code == 200
+
+        assert 'pikachu' in follow_response.content.decode('utf-8')
+        assert '<img src="https://pokeapi.co/media/sprites/pokemon/25.png"' in follow_response.content.decode('utf-8')
+
+# teste com nome invalido
+@pytest.mark.django_db
+def test_search_invalid_pokemon():
+    client = Client()
+
+    with requests_mock.Mocker() as mocker:
+        mocker.get('https://pokeapi.co/api/v2/pokemon/invalidpokemon/', status_code=404)
+
+        response = client.post(reverse('pokemon_detail', kwargs={'pokemon_id': 'invalidpokemon'}))
+
+        assert response.status_code == 302
+
+        redirect_url = response.url
+        expected_redirect_url = reverse('pokemon_detail', kwargs={'pokemon_id': 'invalidpokemon'})
+        assert redirect_url == expected_redirect_url
+
+        follow_response = client.get(redirect_url, follow=True)
+
+        assert follow_response.status_code == 200
+
+        assert 'Pokemon não encontrado.' in follow_response.content.decode('utf-8')
